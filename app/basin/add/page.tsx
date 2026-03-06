@@ -1,4 +1,4 @@
-// app / basin / add / page.tsx;
+"use client";
 import Header from "@/app/components/Header";
 import Title from "@/app/components/Title";
 import { Button } from "@/components/ui/button";
@@ -11,15 +11,36 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 // import { NumberInput, NumberInputField } from "@/components/ui/number-input";
 
 export default function Home() {
+  const BasinNameGenerated = useState(" Basin");
+  const [basinName, setBasinName] = useState("");
+  const [basinType, setBasinType] = useState("");
+  const handleBasinNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+      .replace(/\s\s+/g, " ") // Only fix DOUBLE spaces (let one space live!)
+      .replace(/(^|\s)\w/g, (c) => c.toUpperCase()); // Keep Title Case
+    setBasinName(value);
+  };
+
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 transition-colors">
       <Header />
-      <Title title="Add New Basin" />
+      <Title title="Add New Basin" back="/basin/list" />
       <main className="max-w-4xl mx-auto py-12 px-6">
         <form className="mt-8 bg-white dark:bg-zinc-900 shadow-sm border border-zinc-200 dark:border-zinc-800 rounded-xl p-8">
+          {/* A field showing Basin Name Value + " Basin", disabled. */}
+          <div className="flex items-center justify-between pb-6 mb-6 border-b">
+            <Input
+              placeholder="Generated Basin Name"
+              className="dark:bg-zinc-800"
+              disabled
+              value={basinName ? basinName + " Basin" : ""}
+              onChange={(e) => BasinNameGenerated[1](e.target.value + " Basin")}
+            />
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* --- SECTION: CLASSIFICATION --- */}
             <div className="space-y-4">
@@ -31,11 +52,21 @@ export default function Home() {
                 <label className="text-sm font-medium">Basin Type</label>
                 <Select>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select Basin Type" />
+                    <SelectValue
+                      placeholder="Select Basin Type"
+                      value={basinType}
+                    />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Main">Main</SelectItem>
-                    <SelectItem value="Sub">Sub</SelectItem>
+                    <SelectItem
+                      value="Main"
+                      onClick={() => setBasinType("Main")}
+                    >
+                      Main
+                    </SelectItem>
+                    <SelectItem value="Sub" onClick={() => setBasinType("Sub")}>
+                      Sub
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -66,12 +97,14 @@ export default function Home() {
                 <Input
                   placeholder="Enter basin name"
                   className="dark:bg-zinc-800"
+                  value={basinName}
+                  onChange={handleBasinNameChange}
                 />
               </div>
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">Sub Basin Type</label>
-                <Select>
+                <Select disabled={basinType === "Sub" ? true : false}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select Sub Basin Type" />
                   </SelectTrigger>

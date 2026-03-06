@@ -1,6 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+import classNames from "classnames";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -23,6 +24,28 @@ export const columns: ColumnDef<Basin>[] = [
   {
     accessorKey: "status",
     header: "Status",
+    cell: ({ row }) => {
+      const status = row.getValue("status") as string; // Ensure status is a string
+      const statusColors: Record<string, string> = {
+        pending: "bg-yellow-500/80",
+        processing: "bg-blue-500/80",
+        completed: "bg-green-500/80",
+        failed: "bg-red-500/80",
+      };
+      // Default to a fallback class if status is not recognized
+      const defaultColor = "bg-gray-500/80";
+      const color = statusColors[status] || defaultColor;
+      return (
+        <div
+          className={classNames(
+            `w-max-sm p-1 text-xs text-center font-bold text-white uppercase rounded-md`,
+            color,
+          )}
+        >
+          {status}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "updatedAt", // Updated At

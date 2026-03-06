@@ -1,11 +1,12 @@
 interface TitleProps {
   title: string;
+  back?: string;
 }
 
-export default function Title({ title }: TitleProps) {
+export default function Title({ title, back }: TitleProps) {
   return (
     <div className="mt-4 flex justify-start items-center px-24 gap-6 ">
-      <a href="/">
+      <a href={back ? back : "/"}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
