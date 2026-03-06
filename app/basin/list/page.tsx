@@ -163,7 +163,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="flex min-h-screen flex-col bg-zinc-50 font-sans dark:bg-black ">
+    <div className="flex min-h-screen flex-col bg-background font-sans dark:bg-background ">
       <Header />
       <div className="flex flex-col gap-4">
         <Title title="Basin List" />
@@ -191,12 +191,13 @@ export default function Home() {
           </div>
           <div className="flex items-center justify-center">
             <Button
-              variant="outline"
+              variant="default"
               // on click, navigate to /basin/add
               onClick={() => (window.location.href = "/basin/add")}
-              className="hover:scale-105 hover:shadow-[0_0_5px#0a18ff] transition-all duration-300"
+              className=" rounded-full hover:scale-105 hover:shadow-[0_0_5px#0a18ff] transition-all duration-300"
             >
-              <p>Add Basin</p> <Plus />
+              <Plus />
+              <span>Add Basin</span>
             </Button>
           </div>
         </div>

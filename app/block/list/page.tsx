@@ -16,14 +16,6 @@ import { DataTable } from "./data-table";
 import { Block, columns } from "./columns";
 
 export default function Home() {
-  function formatDate(date: Date): string {
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-    return `${day}/${month}/${year} ${hours}:${minutes}`;
-  }
   const data: Block[] = [
     {
       id: "1",
@@ -158,7 +150,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="flex min-h-screen flex-col bg-zinc-50 font-sans dark:bg-black">
+    <div className="flex min-h-screen flex-col bg-zinc-50 font-sans dark:bg-background">
       <Header />
       <div className="flex flex-col gap-4">
         <Title title="Block List" />

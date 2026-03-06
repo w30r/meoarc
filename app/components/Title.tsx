@@ -5,13 +5,16 @@ interface TitleProps {
 
 export default function Title({ title, back }: TitleProps) {
   return (
-    <div className="mt-4 flex justify-start items-center px-24 gap-6 ">
-      <a href={back ? back : "/"}>
+    <div className="mt-4 flex justify-start items-center px-24 gap-6">
+      <a
+        href={back ? back : "/"}
+        className="outline rounded-full p-2 shadow-sm hover:bg-foreground/10 transition-all duration-300"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth={1.5}
+          strokeWidth={3}
           stroke="currentColor"
           className="size-6"
         >

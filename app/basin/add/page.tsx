@@ -2,7 +2,6 @@
 import Header from "@/app/components/Header";
 import Title from "@/app/components/Title";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -26,16 +25,16 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 transition-colors">
+    <div className="max-h-screen bg-background dark:bg-background transition-colors">
       <Header />
       <Title title="Add New Basin" back="/basin/list" />
-      <main className="max-w-4xl mx-auto py-12 px-6">
-        <form className="mt-8 bg-white dark:bg-zinc-900 shadow-sm border border-zinc-200 dark:border-zinc-800 rounded-xl p-8">
+      <main className="max-w-4xl mx-auto px-6">
+        <form className="mt-8 bg-background dark:bg-card/50 shadow-sm border border-border dark:border-outline rounded-xl p-8">
           {/* A field showing Basin Name Value + " Basin", disabled. */}
           <div className="flex items-center justify-between pb-6 mb-6 border-b">
             <Input
               placeholder="Generated Basin Name"
-              className="dark:bg-zinc-800 transition-all duration-200"
+              className="dark:bg-primary text-background text-center placeholder:text-background/80 transition-all duration-200"
               disabled
               value={
                 basinName
@@ -49,7 +48,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* --- SECTION: CLASSIFICATION --- */}
             <div className="space-y-4">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-500">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
                 Classification
               </h3>
 
@@ -84,7 +83,7 @@ export default function Home() {
 
             {/* --- SECTION: DETAILS --- */}
             <div className="space-y-4">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-500">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
                 Basin Details
               </h3>
 
@@ -92,7 +91,7 @@ export default function Home() {
                 <label className="text-sm font-medium">Basin Name</label>
                 <Input
                   placeholder="Enter basin name"
-                  className="dark:bg-zinc-800"
+                  className=""
                   value={basinName}
                   onChange={handleBasinNameChange}
                 />
@@ -118,7 +117,7 @@ export default function Home() {
 
             {/* --- SECTION: PHYSICAL MEASUREMENTS (Spans 2 columns) --- */}
             <div className="md:col-span-2 pt-4 border-t border-zinc-100 dark:border-zinc-800">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-zinc-500 mb-4">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-4">
                 Physical Measurements
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
