@@ -34,7 +34,7 @@ export default function Home() {
         <div className="w-1/2 bg-background flex flex-col justify-center items-center p-12 gap-2">
           <h1 className="text-foreground font-bold text-5xl">WELCOME</h1>
           <h1 className="text-foreground font-bold text-2xl">
-            to Meor Asset Registration Centerr
+            to Meor Asset Registration Center
           </h1>
           <p className="text-foreground text-sm text-center font-normal w-3/4">
             Please ensure that the Asset Name Registration are in accordance to
@@ -51,22 +51,22 @@ export default function Home() {
           </p>
         </div>
         <div className="w-1/2 bg-background text-foreground grid grid-cols-2 text-3xl font-bold group">
-          <div className=" bg-purple-500/70 p-12 text-center items-center flex justify-center group-hover:text-4xl duration-150 hover:text-black">
+          <div className=" bg-purple-500/50 p-12 text-center items-center flex justify-center group-hover:text-4xl duration-100 hover:text-black rounded-3xl m-2">
             <a href="/basin/list" className="text-white hover:text-black">
               BASIN
             </a>
           </div>
-          <div className=" bg-pink-500/70 p-12 text-center items-center flex justify-center group-hover:text-4xl duration-150 hover:text-black">
+          <div className=" bg-pink-500/50 p-12 text-center items-center flex justify-center group-hover:text-4xl duration-200 hover:text-black rounded-3xl m-2">
             <a href="/block/list" className="text-white hover:text-black">
               BLOCK
             </a>
           </div>
-          <div className=" bg-blue-500/70 p-12 text-center items-center flex justify-center group-hover:text-4xl duration-150 hover:text-black">
+          <div className=" bg-blue-500/50 p-12 text-center items-center flex justify-center group-hover:text-4xl duration-300 hover:text-black rounded-3xl m-2">
             <a href="/prospect/list" className="text-white hover:text-black">
               PROSPECT
             </a>
           </div>
-          <div className=" bg-yellow-500/70 p-12 text-center items-center flex justify-center group-hover:text-4xl duration-150 hover:text-black">
+          <div className=" bg-yellow-500/50 p-12 text-center items-center flex justify-center group-hover:text-4xl duration-400 hover:text-black rounded-3xl m-2">
             <a href="/well/list" className="text-white hover:text-black">
               WELL
             </a>
