@@ -15,9 +15,9 @@ import { useState } from "react";
 // import { NumberInput, NumberInputField } from "@/components/ui/number-input";
 
 export default function Home() {
-  const BasinNameGenerated = useState(" Basin");
   const [basinName, setBasinName] = useState("");
   const [basinType, setBasinType] = useState("");
+  const [subBasinType, setSubBasinType] = useState("");
   const handleBasinNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
       .replace(/\s\s+/g, " ") // Only fix DOUBLE spaces (let one space live!)
@@ -35,10 +35,15 @@ export default function Home() {
           <div className="flex items-center justify-between pb-6 mb-6 border-b">
             <Input
               placeholder="Generated Basin Name"
-              className="dark:bg-zinc-800"
+              className="dark:bg-zinc-800 transition-all duration-200"
               disabled
-              value={basinName ? basinName + " Basin" : ""}
-              onChange={(e) => BasinNameGenerated[1](e.target.value + " Basin")}
+              value={
+                basinName
+                  ? basinType === "Main"
+                    ? basinName + " Basin"
+                    : basinName + " " + subBasinType
+                  : ""
+              }
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -50,23 +55,14 @@ export default function Home() {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">Basin Type</label>
-                <Select>
+                {/* Move the logic here! */}
+                <Select onValueChange={(value) => setBasinType(value)}>
                   <SelectTrigger>
-                    <SelectValue
-                      placeholder="Select Basin Type"
-                      value={basinType}
-                    />
+                    <SelectValue placeholder="Select Basin Type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem
-                      value="Main"
-                      onClick={() => setBasinType("Main")}
-                    >
-                      Main
-                    </SelectItem>
-                    <SelectItem value="Sub" onClick={() => setBasinType("Sub")}>
-                      Sub
-                    </SelectItem>
+                    <SelectItem value="Main">Main</SelectItem>
+                    <SelectItem value="Sub">Sub</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -104,7 +100,10 @@ export default function Home() {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">Sub Basin Type</label>
-                <Select disabled={basinType === "Sub" ? true : false}>
+                <Select
+                  disabled={basinType !== "Sub"}
+                  onValueChange={setSubBasinType}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select Sub Basin Type" />
                   </SelectTrigger>
