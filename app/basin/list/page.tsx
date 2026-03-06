@@ -164,7 +164,6 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans dark:bg-background ">
-      <Header />
       <div className="flex flex-col gap-4">
         <Title title="Basin List" />
 

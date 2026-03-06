@@ -151,7 +151,6 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col bg-zinc-50 font-sans dark:bg-background">
-      <Header />
       <div className="flex flex-col gap-4">
         <Title title="Block List" />
 

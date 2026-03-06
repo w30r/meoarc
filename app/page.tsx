@@ -1,5 +1,4 @@
 "use client";
-import Header from "./components/Header";
 
 export default function Home() {
   // const response = await fetch("https://v2.jokeapi.dev/joke/Any?amount=3");
@@ -7,8 +6,7 @@ export default function Home() {
   // console.log(data.jokes);
 
   return (
-    <div className="flex min-h-screen flex-col ">
-      <Header />
+    <div className="flex min-h-[calc(100vh-12vh)] flex-col ">
       <div className="flex flex-1 bg-primary transition-all duration-500">
         <div className="w-1/2 bg-background flex flex-col justify-center items-center p-12 gap-2">
           <h1 className="font-hero text-primary font-normal text-6xl ">

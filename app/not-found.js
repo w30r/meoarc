@@ -4,7 +4,6 @@ import Header from "./components/Header"; // Re-use your header!
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex flex-col">
-      <Header />
       <main className="flex-1 flex flex-col items-center justify-center p-6 text-center">
         <h1 className="text-9xl font-black text-zinc-200 dark:text-zinc-800">
           404

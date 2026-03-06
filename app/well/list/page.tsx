@@ -7,7 +7,6 @@ export default async function Home() {
 
   return (
     <div className="flex min-h-screen flex-col bg-zinc-50 font-sans dark:bg-black">
-      <Header />
       <div className="flex flex-1">
         <table className="table-auto w-full">
           <thead>

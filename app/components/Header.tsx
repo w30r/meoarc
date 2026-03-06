@@ -1,15 +1,22 @@
+"use client";
 import Link from "next/link";
 import React from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  SignInButton,
+  SignUpButton,
+  UserButton,
+  Show, // We use Show now
+} from "@clerk/nextjs";
 
 const Header: React.FC = () => {
   return (
-    <header className="flex items-center justify-between px-6 py-4 rounded-2xl m-2 bg-primary dark:bg-card text-foreground shadow-md">
-      <div className="flex  justify-center items-center gap-10 p-1 ">
+    <header className="max-h-12 flex items-center justify-between px-6 py-4 rounded-2xl m-2 bg-primary dark:bg-card text-foreground shadow-md">
+      <div className="flex justify-center items-center gap-10 p-1">
         <Link
           href="/"
           className="hover:bg-background p-2 rounded-full transition-all duration-300"
         >
+          {/* Home Icon SVG */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -28,15 +35,41 @@ const Header: React.FC = () => {
         <h1 className="font-sans text-3xl font-bold dark:text-primary flex justify-center items-center text-foreground">
           MeoARC
         </h1>
-        <span className="text-xl font-normal font-mono">
+        <span className="hidden md:block text-xl font-normal font-mono">
           Meor Asset Registration Center
         </span>
       </div>
-      <Avatar>
-        <AvatarImage src="https://i.pinimg.com/474x/e0/51/9e/e0519efc2ab6f5d7f6e83f0f8416f97d.jpg" />
-        <AvatarFallback>CN</AvatarFallback>
-      </Avatar>
+
+      <div className="flex items-center gap-4">
+        {/* Replacement for SignedOut */}
+        <Show when="signed-out">
+          <div className="flex items-center gap-4">
+            <SignInButton mode="modal">
+              <button className="text-sm font-medium hover:underline cursor-pointer">
+                Sign In
+              </button>
+            </SignInButton>
+            <SignUpButton mode="modal">
+              <button className="bg-foreground text-background px-4 py-2 rounded-full text-sm font-medium hover:opacity-90 transition-opacity cursor-pointer">
+                Get Started
+              </button>
+            </SignUpButton>
+          </div>
+        </Show>
+
+        {/* Replacement for SignedIn */}
+        <Show when="signed-in">
+          <UserButton
+            appearance={{
+              elements: {
+                userButtonAvatarBox: "size-10",
+              },
+            }}
+          />
+        </Show>
+      </div>
     </header>
   );
 };
+
 export default Header;
