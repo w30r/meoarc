@@ -122,19 +122,19 @@ export default function Home() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="space-y-2">
                   <label className="text-xs font-medium">Length (km)</label>
-                  <Input type="number" placeholder="0.0" />
+                  <Input type="decimal" placeholder="0.00" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-medium">Width (km)</label>
-                  <Input type="number" placeholder="0.0" />
+                  <Input type="decimal" placeholder="0.00" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-medium">Acreage</label>
-                  <Input type="number" placeholder="0.0" />
+                  <label className="text-xs font-medium">Acreage (m²)</label>
+                  <Input type="decimal" placeholder="0.00" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-medium">Thickness</label>
-                  <Input type="number" placeholder="0.0" />
+                  <label className="text-xs font-medium">Thickness (m)</label>
+                  <Input type="decimal" placeholder="0.00" />
                 </div>
               </div>
             </div>

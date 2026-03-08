@@ -62,7 +62,7 @@ const Header: React.FC = () => {
           <UserButton
             appearance={{
               elements: {
-                userButtonAvatarBox: "size-10",
+                userButtonAvatarBox: "size-12",
               },
             }}
           />
