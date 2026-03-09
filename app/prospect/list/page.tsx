@@ -1,18 +1,37 @@
-import Header from "@/app/components/Header";
 import { DataTable } from "./data-table";
-import { columns } from "./columns";
+import { columns, Prospect } from "./columns";
 import Title from "@/app/components/Title";
+import clientPromise from "@/lib/mongodb";
 
 export default async function Home() {
-  const response = await fetch("https://v2.jokeapi.dev/joke/Any?amount=3");
-  const data = await response.json();
-  console.log(data.jokes);
+  // Fetch data from "test" collection in MongoDB
+  const client = await clientPromise;
+  const db = client.db(); // Use the default database specified in the URI
+  const collection = db.collection("prospect");
+  const data = await collection.find({}).toArray();
+  // Map the fetched data to the Prospect type
+  const mappedData: Prospect[] = data.map((item) => ({
+    id: item._id.toString(), // Assuming _id is an ObjectId and needs to be converted to string
+    name: item.name,
+    country: item.country,
+    region: item.region,
+    block_name: item.block_name,
+    play_name: item.play_name,
+    short_name: item.short_name,
+    submission_year: item.submission_year,
+    existence_kind: item.existence_kind,
+    submitted_by: item.submitted_by,
+    submitted_at: item.submitted_at,
+    reviewed_by: item.reviewed_by,
+    reviewed_at: item.reviewed_at,
+    status: item.status,
+  }));
 
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans ">
       <Title title="Prospect List" />
       <div className="px-8 py-4">
-        <DataTable columns={columns} data={data} />
+        <DataTable columns={columns} data={mappedData} />
       </div>
     </div>
   );

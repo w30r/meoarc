@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { ConfettiButton } from "@/components/ui/confetti";
 
 export default function playground() {
   return (
@@ -19,6 +20,14 @@ export default function playground() {
         <Button className="max-w-1/3" variant={"ghost"}>
           Click!
         </Button>
+        <h1 className="font-bold text-2xl pt-4 uppercase animate-in ">
+          whynot
+        </h1>
+        <ConfettiButton
+          className={`max-w-1/3 ${buttonVariants({ variant: "destructive" })}`}
+        >
+          Congratulations!
+        </ConfettiButton>
       </div>
     </div>
   );

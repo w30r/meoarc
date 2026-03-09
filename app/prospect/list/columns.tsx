@@ -4,56 +4,106 @@ import { ColumnDef } from "@tanstack/react-table";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Basin = {
-  id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
-  createdAt: string; // New field
-  createdBy: string; // New field
-  updatedAt: string; // New field
-  basinName: string; // New field
-  country: string; // New field
-  region: string; // New field
-  basinType: string; // New field
-  parentBasin: string; // New field
+export type Prospect = {
+  id: string; // Typically mapped from MongoDB _id
+  name: string;
+  country: string;
+  region: "PM" | "SB" | "SK";
+  block_name: string;
+  play_name: string;
+  short_name: string;
+  submission_year: number;
+  existence_kind: "Lead" | "Prospect";
+  submitted_by: string;
+  submitted_at: string; // ISO Date String
+  reviewed_by: string;
+  reviewed_at: string; // ISO Date String
+  // Keeping these if your app uses them for state management
+  status: "pending" | "approved" | "rejected";
 };
-
-export const columns: ColumnDef<Basin>[] = [
+export const columns: ColumnDef<Prospect>[] = [
   {
     accessorKey: "status",
-    header: "Status",
+    header: () => <span className="text-center font-bold">Status</span>,
+    cell: ({ row }) => {
+      const status = row.original.status;
+      let color = "gray";
+      if (status === "pending") color = "yellow";
+      if (status === "approved") color = "green";
+      if (status === "rejected") color = "red";
+      return (
+        <div
+          className={`w-max-sm p-1 text-xs text-center font-bold text-white uppercase rounded-md bg-${color}-500/80`}
+        >
+          {status}
+        </div>
+      );
+    },
   },
   {
-    accessorKey: "updatedAt", // Updated At
-    header: "Updated At",
+    accessorKey: "name",
+    header: () => <span className="text-center font-bold">Prospect Name</span>,
+    cell: ({ row }) => {
+      const name = row.original.name;
+      return (
+        <div className="flex items-center gap-2 font-black text-secondary">
+          <span>{name}</span>
+        </div>
+      );
+    },
   },
   {
-    accessorKey: "createdBy", // Created By
-    header: "Created By",
+    accessorKey: "block_name",
+    header: () => <span className="text-center font-bold">Block Name</span>,
   },
   {
-    accessorKey: "createdAt", // Created At
-    header: "Created At",
+    accessorKey: "play_name",
+    header: () => <span className="text-center font-bold">Play Name</span>,
   },
   {
-    accessorKey: "basinName", // Basin Name
-    header: "Basin Name",
+    accessorKey: "short_name",
+    header: () => <span className="text-center font-bold">Short Name</span>,
   },
   {
-    accessorKey: "country", // Country
-    header: "Country",
+    accessorKey: "existence_kind",
+    header: () => <span className="text-center font-bold">Kind</span>,
   },
   {
-    accessorKey: "region", // Region
-    header: "Region",
+    accessorKey: "region",
+    header: () => <span className="text-center font-bold">Region</span>, // PM, SB, or SK
   },
   {
-    accessorKey: "basinType", // Basin Type
-    header: "Basin Type",
+    accessorKey: "country",
+    header: () => <span className="text-center font-bold">Country</span>,
   },
   {
-    accessorKey: "parentBasin", // Parent Basin
-    header: "Parent Basin",
+    accessorKey: "submission_year",
+    header: () => (
+      <span className="text-center font-bold">Submission Year</span>
+    ),
+  },
+  {
+    accessorKey: "registered_by",
+    header: () => <span className="text-center font-bold">Registered By</span>,
+  },
+  {
+    accessorKey: "registered_at",
+    header: () => <span className="text-center font-bold">Registered At</span>,
+    cell: ({ row }) => {
+      const date = new Date(row.original.registeredAt);
+      return date.toLocaleDateString();
+    },
+  },
+  {
+    accessorKey: "reviewed_by",
+    header: () => <span className="text-center font-bold">Reviewed By</span>,
+  },
+  {
+    accessorKey: "reviewed_at",
+    header: () => <span className="text-center font-bold">Reviewed At</span>,
+    cell: ({ row }) => {
+      const date = new Date(row.original.reviewed_at);
+      return date.toLocaleDateString();
+    },
   },
 ];

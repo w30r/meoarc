@@ -53,9 +53,7 @@ const Card: React.FC<CardProps> = ({
       )} */}
       <div className="p-6">
         {title && <h2 className="text-2xl font-bold mb-2">{title}</h2>}
-        {description && (
-          <p className="text-gray-600 text-foreground mb-4">{description}</p>
-        )}
+        {description && <p className=" text-foreground mb-4">{description}</p>}
         {children}
       </div>
       {actions && (
