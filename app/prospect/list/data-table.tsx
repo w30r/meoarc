@@ -21,9 +21,11 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
+import { useCallback } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -34,14 +36,21 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
-  pageSizeOptions = [10, 15, 20],
+  // pageSizeOptions = [10, 15, 20, 25, 30],
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    initialState: {
+      pagination: {
+        pageSize: 10,
+      },
+    },
   });
+
+  const pageSizeOptions = [10, 15, 20, 25, 30];
 
   return (
     <div>
@@ -96,22 +105,28 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex items-center justify-between space-x-2 py-4">
-        <div className="flex items-center space-x-2">
-          <p>Page size</p>
-          <Select>
-            <SelectTrigger className="h-8 w-17.5">
-              {table.getState().pagination.pageIndex + 1}
+        <div className="flex items-center space-x-2 gap-4 justify-center">
+          {/* <p className="text-sm font-medium">Rows per page</p> */}
+          <Select onValueChange={(value) => table.setPageSize(Number(value))}>
+            <SelectTrigger className="h-8 w-auto">
+              {table.getState().pagination.pageSize + " rows per page"}
             </SelectTrigger>
             <SelectContent>
-              {pageSizeOptions.map((option) => (
-                <SelectItem key={option} value={option.toString()}>
-                  {option}
-                </SelectItem>
-              ))}
+              <SelectGroup>
+                {pageSizeOptions.map((option) => (
+                  <SelectItem key={option} value={option.toString()}>
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
             </SelectContent>
           </Select>
         </div>
         <div className="flex items-center space-x-2">
+          <p className="text-sm font-medium">
+            Page {table.getState().pagination.pageIndex + 1} of{" "}
+            {table.getPageCount()}
+          </p>
           <Button
             variant="outline"
             size="sm"
