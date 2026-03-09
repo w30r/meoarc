@@ -14,8 +14,8 @@ export type Prospect = {
   short_name: string;
   submission_year: number;
   existence_kind: "Lead" | "Prospect";
-  submitted_by: string;
-  submitted_at: string; // ISO Date String
+  registered_by: string;
+  registered_at: string; // ISO Date String
   reviewed_by: string;
   reviewed_at: string; // ISO Date String
   // Keeping these if your app uses them for state management
@@ -41,24 +41,24 @@ export const columns: ColumnDef<Prospect>[] = [
     },
   },
   {
-    accessorKey: "name",
-    header: () => <span className="text-center font-bold">Prospect Name</span>,
-    cell: ({ row }) => {
-      const name = row.original.name;
-      return (
-        <div className="flex items-center gap-2 font-black text-secondary">
-          <span>{name}</span>
-        </div>
-      );
-    },
-  },
-  {
     accessorKey: "block_name",
     header: () => <span className="text-center font-bold">Block Name</span>,
   },
   {
     accessorKey: "play_name",
     header: () => <span className="text-center font-bold">Play Name</span>,
+  },
+  {
+    accessorKey: "name",
+    header: () => <span className="text-center font-bold">Prospect Name</span>,
+    cell: ({ row }) => {
+      const name = row.original.name;
+      return (
+        <div className="flex items-center gap-2 font-black text-chart-4 hover:text-primary cursor-pointer">
+          <span>{name}</span>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "short_name",
@@ -85,25 +85,58 @@ export const columns: ColumnDef<Prospect>[] = [
   {
     accessorKey: "registered_by",
     header: () => <span className="text-center font-bold">Registered By</span>,
+    cell: ({ row }) => {
+      const registeredBy = row.original.registered_by;
+      return (
+        <div className="flex items-center gap-2 font-black text-secondary">
+          {/* A small avatar with initial */}
+          <div className="h-6 w-6 rounded-full bg-secondary flex items-center justify-center text-white text-xs">
+            {registeredBy.charAt(0).toUpperCase()}
+          </div>
+          <span>{registeredBy}</span>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "registered_at",
     header: () => <span className="text-center font-bold">Registered At</span>,
     cell: ({ row }) => {
-      const date = new Date(row.original.registeredAt);
-      return date.toLocaleDateString();
+      const date = new Date(row.original.registered_at);
+      return date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      });
     },
   },
   {
     accessorKey: "reviewed_by",
     header: () => <span className="text-center font-bold">Reviewed By</span>,
+    cell: ({ row }) => {
+      const registeredBy = row.original.registered_by;
+      return (
+        <div className="flex items-center gap-2 font-black text-primary">
+          {/* A small avatar with initial */}
+          <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center text-white text-xs">
+            {registeredBy.charAt(0).toUpperCase()}
+          </div>
+          <span>{registeredBy}</span>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "reviewed_at",
     header: () => <span className="text-center font-bold">Reviewed At</span>,
     cell: ({ row }) => {
+      // Date of format DD/MM/YYYY
       const date = new Date(row.original.reviewed_at);
-      return date.toLocaleDateString();
+      return date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      });
     },
   },
 ];
