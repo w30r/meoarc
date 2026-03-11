@@ -114,14 +114,14 @@ export const columns: ColumnDef<Prospect>[] = [
     accessorKey: "reviewed_by",
     header: () => <span className="text-center font-bold">Reviewed By</span>,
     cell: ({ row }) => {
-      const registeredBy = row.original.registered_by;
+      const registeredBy = row.original.reviewed_by;
       return (
         <div className="flex items-center gap-2 font-black text-primary">
           {/* A small avatar with initial */}
           <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center text-white text-xs">
-            {registeredBy.charAt(0).toUpperCase()}
+            {registeredBy ? registeredBy.charAt(0).toUpperCase() : "-"}
           </div>
-          <span>{registeredBy}</span>
+          <span>{registeredBy ? registeredBy : "-"}</span>
         </div>
       );
     },
@@ -132,6 +132,8 @@ export const columns: ColumnDef<Prospect>[] = [
     cell: ({ row }) => {
       // Date of format DD/MM/YYYY
       const date = new Date(row.original.reviewed_at);
+      const isValidDate = !isNaN(date.getTime());
+      if (!isValidDate) return "-";
       return date.toLocaleDateString("en-GB", {
         day: "2-digit",
         month: "short",
