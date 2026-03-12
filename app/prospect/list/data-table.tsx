@@ -1,11 +1,13 @@
 "use client";
-
+import * as React from "react";
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
+  SortingState,
+  getSortedRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -38,9 +40,15 @@ export function DataTable<TData, TValue>({
   data,
   // pageSizeOptions = [10, 15, 20, 25, 30],
 }: DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = React.useState<SortingState>([]);
   const table = useReactTable({
     data,
     columns,
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+    },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: {
@@ -54,7 +62,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="overflow-hidden border">
+      <div className="overflow-hidden border rounded-2xl shadow-2xs">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

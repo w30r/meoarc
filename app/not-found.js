@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Header from "./components/Header"; // Re-use your header!
+import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 
 export default function NotFound() {
   return (
@@ -9,19 +10,23 @@ export default function NotFound() {
           404
         </h1>
 
-        <div className="mt-[-4rem]">
+        <div className="-mt-16">
           {" "}
           {/* Pull the text up over the big 404 */}
-          <h2 className="text-3xl font-bold text-foreground">Page Not Found</h2>
-          <p className="mt-4 text-zinc-500 max-w-xs">
-            I think the page is still under construction, or maybe it got lost
-            in the void. Either way, it’s not here.
+          <h2 className="text-3xl font-bold text-foreground">
+            UNDER CONSTRUCTION
+          </h2>
+          <p className="mt-4 text-zinc-500 max-w-md">
+            I think the page is still under development, <br />
+            or maybe it got lost in the void. <br />
+            <br />
+            Either way, it’s not here.
           </p>
           <Link
             href="/"
-            className="mt-8 inline-block bg-blue-600 hover:bg-blue-700 hover:scale-105 duration-200 text-white font-medium px-6 py-3 rounded-lg transition-all"
+            className="shadow-lg rounded-full mt-8 inline-block bg-background hover:bg-foreground hover:text-black hover:scale-105 duration-200 text-white font-medium px-6 py-3 transition-all"
           >
-            Return to Dashboard
+            <AnimatedShinyText>Return to Dashboard</AnimatedShinyText>
           </Link>
         </div>
       </main>

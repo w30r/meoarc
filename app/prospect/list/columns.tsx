@@ -1,6 +1,8 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -87,6 +89,9 @@ export const columns: ColumnDef<Prospect>[] = [
     header: () => <span className="text-center font-bold">Registered By</span>,
     cell: ({ row }) => {
       const registeredBy = row.original.registered_by;
+      if (!registeredBy) {
+        return <span className="text-center">N/A</span>;
+      }
       return (
         <div className="flex items-center gap-2 font-black text-secondary">
           {/* A small avatar with initial */}
@@ -100,7 +105,17 @@ export const columns: ColumnDef<Prospect>[] = [
   },
   {
     accessorKey: "registered_at",
-    header: () => <span className="text-center font-bold">Registered At</span>,
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Registered at
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const date = new Date(row.original.registered_at);
       return date.toLocaleDateString("en-GB", {
