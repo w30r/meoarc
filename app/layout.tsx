@@ -76,7 +76,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${montserrat.variable} ${robotoSlab.variable} ${pacifico.variable}  antialiased`}
       >
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
         <ThemeProvider>
           <ClerkProvider>
             <Header />

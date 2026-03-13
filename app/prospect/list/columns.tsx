@@ -1,13 +1,10 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Basin = {
+export type Prospect = {
   id: string;
   amount: number;
-  status: "pending" | "processing" | "success" | "failed";
+  status: "pending" | "processing" | "approved" | "rejected";
   email: string;
   createdAt: string; // New field
   createdBy: string; // New field
@@ -19,10 +16,33 @@ export type Basin = {
   parentBasin: string; // New field
 };
 
-export const columns: ColumnDef<Basin>[] = [
+export const columns: ColumnDef<Prospect>[] = [
   {
     accessorKey: "status",
     header: "Status",
+    cell: ({ row }) => {
+      const status = row.getValue("status") as
+        | "pending"
+        | "processing"
+        | "approved"
+        | "rejected";
+
+      // Map statuses to Tailwind color classes
+      const statusConfig = {
+        pending: "bg-yellow-500/80",
+        processing: "bg-blue-500/80",
+        approved: "bg-green-500/80",
+        rejected: "bg-red-500/80",
+      };
+
+      return (
+        <div
+          className={`w-max-sm p-1 text-xs text-center font-bold text-white uppercase rounded-md ${statusConfig[status]}`}
+        >
+          {status}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "updatedAt", // Updated At

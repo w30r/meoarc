@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <div className="max-h-screen bg-background dark:bg-background transition-colors">
-      <Title title="Add New Basin" back="/basin/list" />
+      <Title title="Add New Prospect" back="/prospect/list" />
       <main className="max-w-4xl mx-auto px-6">
         <form className="mt-8 bg-background dark:bg-card/50 shadow-sm border border-border dark:border-outline rounded-xl p-8">
           {/* A field showing Basin Name Value + " Basin", disabled. */}
