@@ -1,43 +1,41 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-export type Prospect = {
-  id: string;
-  amount: number;
-  status: "pending" | "processing" | "approved" | "rejected";
-  email: string;
-  createdAt: string; // New field
-  createdBy: string; // New field
-  updatedAt: string; // New field
-  basinName: string; // New field
-  country: string; // New field
-  region: string; // New field
-  basinType: string; // New field
-  parentBasin: string; // New field
-};
+import { ArrowUpDown } from "lucide-react";
 
+// This type is used to define the shape of our data.
+// You can use a Zod schema here if you want.
+export type Prospect = {
+  id: string; // Typically mapped from MongoDB _id
+  name: string;
+  country: string;
+  region: "PM" | "SB" | "SK";
+  block_name: string;
+  play_name: string;
+  short_name: string;
+  submission_year: number;
+  existence_kind: "Lead" | "Prospect";
+  registered_by: string;
+  registered_at: string; // ISO Date String
+  reviewed_by: string;
+  reviewed_at: string; // ISO Date String
+  // Keeping these if your app uses them for state management
+  status: "pending" | "approved" | "rejected";
+};
 export const columns: ColumnDef<Prospect>[] = [
   {
     accessorKey: "status",
-    header: "Status",
+    header: () => <span className="text-center font-bold">Status</span>,
     cell: ({ row }) => {
-      const status = row.getValue("status") as
-        | "pending"
-        | "processing"
-        | "approved"
-        | "rejected";
-
-      // Map statuses to Tailwind color classes
-      const statusConfig = {
-        pending: "bg-yellow-500/80",
-        processing: "bg-blue-500/80",
-        approved: "bg-green-500/80",
-        rejected: "bg-red-500/80",
-      };
-
+      const status = row.original.status;
+      let color = "gray";
+      if (status === "pending") color = "yellow";
+      if (status === "approved") color = "green";
+      if (status === "rejected") color = "red";
       return (
         <div
-          className={`w-max-sm p-1 text-xs text-center font-bold text-white uppercase rounded-md ${statusConfig[status]}`}
+          className={`w-max-sm p-1 text-xs text-center font-bold text-white uppercase rounded-md bg-${color}-500/80`}
         >
           {status}
         </div>
@@ -45,35 +43,117 @@ export const columns: ColumnDef<Prospect>[] = [
     },
   },
   {
-    accessorKey: "updatedAt", // Updated At
-    header: "Updated At",
+    accessorKey: "block_name",
+    header: () => <span className="text-center font-bold">Block Name</span>,
   },
   {
-    accessorKey: "createdBy", // Created By
-    header: "Created By",
+    accessorKey: "play_name",
+    header: () => <span className="text-center font-bold">Play Name</span>,
   },
   {
-    accessorKey: "createdAt", // Created At
-    header: "Created At",
+    accessorKey: "name",
+    header: () => <span className="text-center font-bold">Prospect Name</span>,
+    cell: ({ row }) => {
+      const name = row.original.name;
+      return (
+        <div className="flex items-center gap-2 font-black text-chart-4 hover:text-primary cursor-pointer">
+          <span>{name}</span>
+        </div>
+      );
+    },
   },
   {
-    accessorKey: "basinName", // Basin Name
-    header: "Basin Name",
+    accessorKey: "short_name",
+    header: () => <span className="text-center font-bold">Short Name</span>,
   },
   {
-    accessorKey: "country", // Country
-    header: "Country",
+    accessorKey: "existence_kind",
+    header: () => <span className="text-center font-bold">Kind</span>,
   },
   {
-    accessorKey: "region", // Region
-    header: "Region",
+    accessorKey: "region",
+    header: () => <span className="text-center font-bold">Region</span>, // PM, SB, or SK
   },
   {
-    accessorKey: "basinType", // Basin Type
-    header: "Basin Type",
+    accessorKey: "country",
+    header: () => <span className="text-center font-bold">Country</span>,
   },
   {
-    accessorKey: "parentBasin", // Parent Basin
-    header: "Parent Basin",
+    accessorKey: "submission_year",
+    header: () => (
+      <span className="text-center font-bold">Submission Year</span>
+    ),
+  },
+  {
+    accessorKey: "registered_by",
+    header: () => <span className="text-center font-bold">Registered By</span>,
+    cell: ({ row }) => {
+      const registeredBy = row.original.registered_by;
+      if (!registeredBy) {
+        return <span className="text-center">N/A</span>;
+      }
+      return (
+        <div className="flex items-center gap-2 font-black text-secondary">
+          {/* A small avatar with initial */}
+          <div className="h-6 w-6 rounded-full bg-secondary flex items-center justify-center text-white text-xs">
+            {registeredBy.charAt(0).toUpperCase()}
+          </div>
+          <span>{registeredBy}</span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "registered_at",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Registered at
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const date = new Date(row.original.registered_at);
+      return date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      });
+    },
+  },
+  {
+    accessorKey: "reviewed_by",
+    header: () => <span className="text-center font-bold">Reviewed By</span>,
+    cell: ({ row }) => {
+      const registeredBy = row.original.reviewed_by;
+      return (
+        <div className="flex items-center gap-2 font-black text-primary">
+          {/* A small avatar with initial */}
+          <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center text-white text-xs">
+            {registeredBy ? registeredBy.charAt(0).toUpperCase() : "-"}
+          </div>
+          <span>{registeredBy ? registeredBy : "-"}</span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "reviewed_at",
+    header: () => <span className="text-center font-bold">Reviewed At</span>,
+    cell: ({ row }) => {
+      // Date of format DD/MM/YYYY
+      const date = new Date(row.original.reviewed_at);
+      const isValidDate = !isNaN(date.getTime());
+      if (!isValidDate) return "-";
+      return date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      });
+    },
   },
 ];
